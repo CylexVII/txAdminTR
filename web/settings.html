@@ -1,0 +1,500 @@
+{{include("header")/}}
+
+
+<div class="text-center mb-4">
+    <h2>Settings</h2>
+</div>
+
+
+<div class="row justify-content-md-center">
+    <div class="col-md-7">
+
+        <!-- Global Card -->
+        <div class="card card-accent-danger">
+            <!-- <div class="card-header font-weight-bold">Global:</div> -->
+            <div class="card-header font-weight-bold">
+                <ul class="nav nav-tabs card-header-tabs">
+                    <li class="nav-item">
+                        <a class="nav-item nav-link active" id="nav-global-tab" data-toggle="tab" href="#nav-global"
+                            role="tab" aria-controls="nav-global" aria-selected="true">Genel</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-item nav-link " id="nav-fxserver-tab" data-toggle="tab" href="#nav-fxserver"
+                            role="tab" aria-controls="nav-fxserver" aria-selected="true">FXServer</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-item nav-link " id="nav-monitor-tab" data-toggle="tab" href="#nav-monitor"
+                            role="tab" aria-controls="nav-monitor" aria-selected="true">Monitor/Yeniden Başlatıcı</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-item nav-link " id="nav-discord-tab" data-toggle="tab" href="#nav-discord"
+                            role="tab" aria-controls="nav-discord" aria-selected="true">Discord</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="card-body settings-card">
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="nav-global" role="tabpanel"
+                        aria-labelledby="nav-global-tab">
+
+                        <!-- Global Card -->
+                        <div class="form-group row">
+                            <label for="frmGlobal-serverName" class="col-sm-3 col-form-label">
+                                Sunucu ismi
+                                <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="frmGlobal-serverName"
+                                    value="{{global.serverName}}" maxlength="24" {{disableWrite}}>
+                                <span class="form-text text-muted">
+                                    Sunucu <strong>ismi</strong> txAdmin arayüzü ve discord mesajlarında kullanılır.
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="frmGlobal-publicIP" class="col-sm-3 col-form-label">
+                                Genel IP
+                                <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="frmGlobal-publicIP"
+                                    value="{{global.publicIP}}" maxlength="32" placeholder="123.123.123.123" {{disableWrite}}>
+                                    <span class="form-text text-muted">
+                                        Kendi sunucu ip adresini kullanabilirsin. <br>
+                                        Bu sadece discord mesajları için kullanılacaktır.
+                                    </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="frmGlobal-language" class="col-sm-3 col-form-label">
+                                Dil
+                            </label>
+                            <div class="col-sm-9">
+                                <select class="form-control" id="frmGlobal-language" {{disableWrite}}>
+                                    <!-- TODO: make this list dynamic -->
+                                    <option value="en" {{global.language=='en'|isSelected}}>English</option>
+
+                                    <option value="zh" {{global.language=='zh'|isSelected}}>Chinese</option>
+                                    <option value="cs" {{global.language=='cs'|isSelected}}>Czech</option>
+                                    <option value="da" {{global.language=='da'|isSelected}}>Danish</option>
+                                    <option value="nl" {{global.language=='nl'|isSelected}}>Dutch</option>
+                                    <option value="fr" {{global.language=='fr'|isSelected}}>French</option>
+                                    <option value="de" {{global.language=='de'|isSelected}}>German</option>
+                                    <option value="hu" {{global.language=='hu'|isSelected}}>Hungarian</option>
+                                    <option value="pl" {{global.language=='pl'|isSelected}}>Polish</option>
+                                    <option value="pt_BR" {{global.language=='pt_BR'|isSelected}}>Portuguese (Brazil)</option>
+                                    <option value="ro" {{global.language=='ro'|isSelected}}>Romanian</option>
+                                    <option value="es" {{global.language=='es'|isSelected}}>Spanish</option>
+                                    <option value="th" {{global.language=='th'|isSelected}}>Thai</option>
+                                    <option value="tr" {{global.language=='tr'|isSelected}}>Türkçe</option>
+
+                                    <option value="custom" {{global.language=='custom'|isSelected}}>Custom (Rehberi oku)</option>
+                                </select>
+                                <span class="form-text text-muted">
+                                    Bu dil chat/discord'da kullanılacaktır. <br>
+                                    <b>Not:</b> Custom ayar.
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="frmGlobal-verbose" class="col-sm-3 col-form-label">Ayrıntı Modu</label>
+                            <div class="col-sm-9">
+                                <label class="switch switch-label switch-pill switch-success fix-pill-form">
+                                    <input class="switch-input" type="checkbox" id="frmGlobal-verbose"
+                                        {{global.verbose}} {{disableWrite}}>
+                                    <span class="switch-slider" data-checked="On" data-unchecked="Off"></span>
+                                </label>
+                                <span class="form-text text-muted">
+                                    Konsolda çok daha ayrıntılı bilgiler verilir. <br>
+                                    <b>Not:</b> Eğer hata çözmeye çalışmıyorsanız aktif etmeyin.
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="text-center mt-4">
+                            <button class="btn btn-sm btn-primary" type="submit" id="frmGlobal-save" {{disableWrite}}>
+                                <i class="icons cui-check"></i> Genel Ayarları Kaydet
+                            </button>
+                        </div>
+                        <!-- /Global Card -->
+
+                    </div>
+                    <div class="tab-pane fade" id="nav-fxserver" role="tabpanel" aria-labelledby="nav-fxserver-tab">
+
+                        <!-- FXServer Card -->
+                        <div class="form-group row">
+                            <label for="frmFXServer-buildPath" class="col-sm-3 col-form-label">FXServer Dosyaları
+                                <span class="text-danger">*</span></label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="frmFXServer-buildPath" value="{{fxserver.buildPath}}"
+                                    placeholder="C:/Users/Admin/Documents/fxserver_builds/1380" {{disableWrite}}>
+                                <span class="form-text text-muted">
+                                    Seçiceğin <strong>yer</strong> run.cmd </strong>fxserver.exe</strong> ve
+                                    eğer Windows kullanıyorsanız dll, ve Linux kullanıyorsanız </strong><code>run.sh </code></strong>içeren klasörü seçmelisiniz.</strong>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="frmFXServer-basePath" class="col-sm-3 col-form-label">Ana Dosya
+                                <span class="text-danger">*</span></label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="frmFXServer-basePath" value="{{fxserver.basePath}}"
+                                    placeholder="C:/Users/Admin/Desktop/server01" {{disableWrite}}>
+                                <span class="form-text text-muted">
+                                    Seçiceğin <strong>dosya</strong> resources <code>ve</code>
+                                    <code>cache</code> dosyalarını seçin.
+                                    <code> genellikle server.cfg'nin yanında olur)</code>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="frmFXServer-cfgPath" class="col-sm-3 col-form-label">CFG Dosyası
+                                <span class="text-danger">*</span></label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="frmFXServer-cfgPath" value="{{fxserver.cfgPath}}"
+                                    placeholder="C:/Users/Admin/Desktop/server01/server.cfg" {{disableWrite}}>
+                                <span class="form-text text-muted">
+                                    server.cfg dosyasını seçin. <code></code>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="frmFXServer-onesync" class="col-sm-3 col-form-label">OneSync</label>
+                            <div class="col-sm-9">
+                                <label class="switch switch-label switch-pill switch-success fix-pill-form">
+                                    <input class="switch-input" type="checkbox" id="frmFXServer-onesync"
+                                        {{fxserver.onesync}} {{disableWrite}}>
+                                    <span class="switch-slider" data-checked="ON" data-unchecked="OFF"></span>
+                                </label>
+                                <span class="form-text text-muted">
+                                    Eğer 32'den fazla slot kullanıyorsanız aktifleştirin.
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="frmFXServer-autostart" class="col-sm-3 col-form-label">Otomatik Başlatma</label>
+                            <div class="col-sm-9">
+                                <label class="switch switch-label switch-pill switch-success fix-pill-form">
+                                    <input class="switch-input" type="checkbox" id="frmFXServer-autostart"
+                                        {{fxserver.autostart}} {{disableWrite}}>
+                                    <span class="switch-slider" data-checked="On" data-unchecked="Off"></span>
+                                </label>
+                                <span class="form-text text-muted">
+                                    Sunucuyu <strong>txAdmin başladıktan sonra</strong> otomatik olarak başlat.
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="frmFXServer-quiet" class="col-sm-3 col-form-label">Sessiz Mod</label>
+                            <div class="col-sm-9">
+                                <label class="switch switch-label switch-pill switch-success fix-pill-form">
+                                    <input class="switch-input" type="checkbox" id="frmFXServer-quiet"
+                                        {{fxserver.quiet}} {{disableWrite}}>
+                                    <span class="switch-slider" data-checked="On" data-unchecked="Off"></span>
+                                </label>
+                                <span class="form-text text-muted">
+                                    FXServer' den gelen mesajları gizler. Konsolunuzu hala kullanabilirsiniz.
+                                    Live Console.
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="text-center mt-4">
+                            <button class="btn btn-sm btn-primary" type="submit" id="frmFXServer-save" {{disableWrite}}>
+                                <i class="icons cui-check"></i> FXServer Ayarlarını Kaydet
+                            </button>
+                        </div>
+                        <!-- /FXServer Card -->
+
+                    </div>
+                    <div class="tab-pane fade" id="nav-monitor" role="tabpanel" aria-labelledby="nav-monitor-tab">
+
+                        <!-- Monitor Card -->
+                        <div class="form-group row">
+                            <label for="frmMonitor-schedule" class="col-sm-3 col-form-label">Zamanlanmış Yeniden Başlatmalar</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="frmMonitor-schedule" value="{{monitor.restarter.schedule}}"
+                                    placeholder="05:00, 13:00" {{disableWrite}}>
+                                <span class="form-text text-danger font-weight-boldx" id="frmMonitor-timezoneAlert"></span>
+                                <span class="form-text text-muted">
+                                    Hangi günlerde otomatik olarak yeniden başlatılıcağını seçin. Bu özelliği iptal etmek için boş bırakın. <br>
+                                    Zaman, 24 saat biçiminde, saatlerce olduğu gibi iki rakam da olmalıdır.
+                                    dakika (<code>HH:MM</code>) ve zamanlar virgül ile ayrılmalıdır. <br>
+                                    <strong>Not:</strong> Yerel saatinize değil sunucu saatinize uyduğundan emin olun..
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="frmMonitor-conservative" class="col-sm-3 col-form-label">Ölçülü Mod</label>
+                            <div class="col-sm-9">
+                                <label class="switch switch-label switch-pill switch-success fix-pill-form">
+                                    <input class="switch-input" type="checkbox" id="frmMonitor-conservative"
+                                        checked disabled>
+                                    <span class="switch-slider" data-checked="On" data-unchecked="Off"></span>
+                                </label>
+                                <span class="form-text text-muted">
+                                    Özellik çalışıyorken sunucuyu yeniden başlatmamaya çalışın (kısmi çökmeler geçerli değildir).
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="frmMonitor-detectPartial" class="col-sm-3 col-form-label">Kısmi Hataları Tespit Et</label>
+                            <div class="col-sm-9">
+                                <label class="switch switch-label switch-pill switch-success fix-pill-form">
+                                    <input class="switch-input" type="checkbox" id="frmMonitor-detectPartial"
+                                        checked disabled>
+                                    <span class="switch-slider" data-checked="On" data-unchecked="Off"></span>
+                                </label>
+                                <span class="form-text text-muted">
+                                    FXServer'ın HTTP uç noktasının ne zaman öldüğünü belirleyin ve sunucuyu 5 dakika sonra otomatik yeniden başlatın. <br>
+                                    Kısmi bir çöküşte, yeni oyuncular bağlanamaz ve içindeki oyuncular hala oynayabilir
+                                    olsa bile sunucunuz sunucu listesinde görünmez. <br>
+                                    This feature is still in beta
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="text-center mt-4">
+                            <button class="btn btn-sm btn-primary" type="submit" id="frmMonitor-save" {{disableWrite}}>
+                                <i class="icons cui-check"></i> Monitor/Yeniden Başlatıcı Ayarlarını Kaydet
+                            </button>
+                        </div>
+                        <!-- /Monitor Card -->
+
+                    </div>
+                    <div class="tab-pane fade" id="nav-discord" role="tabpanel" aria-labelledby="nav-discord-tab">
+
+                        <!-- Discord Card -->
+                        <div class="form-group row">
+                            <label for="frmDiscord-enabled" class="col-sm-3 col-form-label">Botu aktifleştir</label>
+                            <div class="col-sm-9">
+                                <label class="switch switch-label switch-pill switch-success fix-pill-form">
+                                    <input class="switch-input" type="checkbox" id="frmDiscord-enabled"
+                                        {{discord.enabled}} {{disableWrite}}>
+                                    <span class="switch-slider" data-checked="On" data-unchecked="Off"></span>
+                                </label>
+                                <span class="form-text text-muted">
+                                    Discord entegresini aktifleştir.
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="frmDiscord-token" class="col-sm-3 col-form-label">Token <span
+                                    class="text-danger">*</span></label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="frmDiscord-token" value="{{discord.token}}"
+                                    maxlength="96" {{disableWrite}}>
+                                <span class="form-text text-muted">
+                                    Botu sunucuna getirmek için tokeni gir, Aşağıdaki 2 rehberi okuyabilirsiniz:
+                                    <a href="https://discordjs.guide/preparations/setting-up-a-bot-application.html"
+                                        target="_blank" rel="noopener noreferrer">Bot ayarlarını yapmak için</a> ve
+                                    <a href="https://discordjs.guide/preparations/adding-your-bot-to-servers.html">Discorda
+                                        bot eklemek için</a>.
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="frmDiscord-announceChannel" class="col-sm-3 col-form-label">Duyuru Kanal ID</label>
+                            <div class="col-sm-9">
+                                <input type="number" class="form-control" id="frmDiscord-announceChannel"
+                                    value="{{discord.announceChannel}}" {{disableWrite}}>
+                                <span class="form-text text-muted">
+                                    Duyuruların gönderileceği kanalın ID'si(sunucu restartları). <br>
+                                    Bu özelliği iptal etmek için boş bırakın. <br>
+                                    Kanal ID'sini bulmak için discord ayarlarına girin ve
+                                    <a href="https://support.discordapp.com/hc/article_attachments/115002742731/mceclip0.png"
+                                    target="_blank" > Geliştirici modu aktifleştir</a>, kanal ID'sini almak istediğiniz kanala sağ tıklayıp "ID'yi kopyala" basın.
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="frmDiscord-statusCommand" class="col-sm-3 col-form-label">
+                                Statü Komutu
+                                <span class="text-danger">*</span>
+                            </label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="frmDiscord-statusCommand" value="{{discord.statusCommand}}"
+                                    placeholder="/status" {{disableWrite}}>
+                                <span class="form-text text-muted">
+                                    Bu komut botun sunucu bilgisini vermesini tetikler.
+                                </span>
+                            </div>
+                        </div>
+
+
+                        <div class="text-center mt-4">
+                            <button class="btn btn-sm btn-primary" type="submit" id="frmDiscord-save" {{disableWrite}}>
+                                <i class="icons cui-check"></i> Discord Ayarlarını Kaydet
+                            </button>
+                        </div>
+                        <!-- /Discord Card -->
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+
+
+{{include("footer")/}}
+
+
+<script>
+    //============================================== General
+    let serverTimezone = "{{serverTimezone}}";
+    let browserTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    if(serverTimezone !== browserTimezone){
+        let msg = `Your timezone: <b>${browserTimezone}</b> <br>
+            Server's timezone: <b>${serverTimezone}</b> <br>
+            Make sure to adjust the times to match your expectations.`;
+        $('#frmMonitor-timezoneAlert').html(msg);
+    }
+
+
+    //============================================== Global Settings
+    $('#frmGlobal-save').click(function () {
+        let data = {
+            serverName: $('#frmGlobal-serverName').val().trim(),
+            publicIP: $('#frmGlobal-publicIP').val().trim(),
+            language: $('#frmGlobal-language').val(),
+            verbose: $('#frmGlobal-verbose').is(':checked')
+        }
+        if (!data.serverName.length || !data.publicIP.length) {
+            var notify = $.notify({ message: '"*" olan alanlar doldurulması zorunludur.' }, { type: 'warning' });
+            return;
+        }
+        var notify = $.notify({ message: '<p class="text-center">Kaydediliyor...</p>' }, {});
+
+        $.ajax({
+            type: "POST",
+            url: '/settings/save/global',
+            timeout: 2000,
+            data: data,
+            dataType: 'json',
+            success: function (data) {
+                notify.update('progress', 0);
+                notify.update('type', data.type);
+                notify.update('message', data.message);
+            },
+            error: function (xmlhttprequest, textstatus, message) {
+                notify.update('progress', 0);
+                notify.update('type', 'danger');
+                notify.update('message', message);
+            }
+        });
+    });
+
+
+    //============================================== FXServer Settings
+    $('#frmFXServer-save').click(function () {
+        let data = {
+            buildPath: $('#frmFXServer-buildPath').val().trim(),
+            basePath: $('#frmFXServer-basePath').val().trim(),
+            cfgPath: $('#frmFXServer-cfgPath').val().trim(),
+            onesync: $('#frmFXServer-onesync').is(':checked'),
+            autostart: $('#frmFXServer-autostart').is(':checked'),
+            quiet: $('#frmFXServer-quiet').is(':checked')
+        }
+        if (!data.buildPath.length || !data.basePath.length || !data.cfgPath.length) {
+            var notify = $.notify({ message: '"*" olan alanlar doldurulması zorunludur.' }, { type: 'warning' });
+            return;
+        }
+        var notify = $.notify({ message: '<p class="text-center">Kaydediliyor...</p>' }, {});
+
+        $.ajax({
+            type: "POST",
+            url: '/settings/save/fxserver',
+            timeout: 2000,
+            data: data,
+            dataType: 'json',
+            success: function (data) {
+                notify.update('progress', 0);
+                notify.update('type', data.type);
+                notify.update('message', data.message);
+            },
+            error: function (xmlhttprequest, textstatus, message) {
+                notify.update('progress', 0);
+                notify.update('type', 'danger');
+                notify.update('message', message);
+            }
+        });
+    });
+
+
+    //============================================== Monitor Settings
+    $('#frmMonitor-save').click(function () {
+        let data = {
+            schedule: $('#frmMonitor-schedule').val().trim()
+        }
+        var notify = $.notify({ message: '<p class="text-center">Kaydediliyor...</p>' }, {});
+
+        $.ajax({
+            type: "POST",
+            url: '/settings/save/monitor',
+            timeout: 2000,
+            data: data,
+            dataType: 'json',
+            success: function (data) {
+                notify.update('progress', 0);
+                notify.update('type', data.type);
+                notify.update('message', data.message);
+            },
+            error: function (xmlhttprequest, textstatus, message) {
+                notify.update('progress', 0);
+                notify.update('type', 'danger');
+                notify.update('message', message);
+            }
+        });
+    });
+
+
+    //============================================== Discord Settings
+    $('#frmDiscord-save').click(function () {
+        let data = {
+            enabled: ($('#frmDiscord-enabled').is(':checked') === true),
+            token: $('#frmDiscord-token').val().trim(),
+            announceChannel: $('#frmDiscord-announceChannel').val().trim(),
+            statusCommand: $('#frmDiscord-statusCommand').val().trim()
+        };
+        if (data.enabled && (!data.token.length || !data.statusCommand.length)) {
+            var notify = $.notify({ message: 'The fields with "*" are required when the bot is enabled.' }, { type: 'warning' });
+            return;
+        }
+        var notify = $.notify({ message: '<p class="text-center">Kaydediliyor...</p>' }, {});
+
+        $.ajax({
+            type: "POST",
+            url: '/settings/save/discord',
+            timeout: 2000,
+            data: data,
+            dataType: 'json',
+            success: function (data) {
+                notify.update('progress', 0);
+                notify.update('type', data.type);
+                notify.update('message', data.message);
+            },
+            error: function (xmlhttprequest, textstatus, message) {
+                notify.update('progress', 0);
+                notify.update('type', 'danger');
+                notify.update('message', message);
+            }
+        });
+    });
+
+</script>

@@ -1,0 +1,102 @@
+{{include("header")/}}
+
+
+<div class="text-center mb-4">
+    <h2>Tüm Statü Raporları</h2>
+</div>
+
+<div class="row justify-content-md-center">
+    <div class="col-md-4 ">
+        <div class="alert alert-secondary text-center" role="alert">
+            {{message|safe}}
+        </div>
+    </div>
+</div>
+
+
+<div class="row justify-content-md-center">
+    <div class="col-lg-8 col-xl-5">
+
+        <!-- Host Machine Card -->
+        <div class="card card-accent-danger" style="min-height: 160px;">
+            <div class="card-header font-weight-bold">Makine Bilgileri:</div>
+            <div class="card-body">
+                {{if(options.host.error !== false)}}
+                    {{host.error|safe}}
+                {{#else}}
+                    <strong>İşletim Sistemi:</strong> {{host.osType}} <br>
+                    <strong>İşletim Sürümü:</strong> {{host.osRelease}} <br>
+                    <strong>İsim:</strong> {{host.username}} <br>
+                    <strong>Makine CPU:</strong> {{host.cpus}} <br>
+                    <strong>Makine Belleği:</strong> {{host.memory}}
+                {{/if}}
+            </div>
+        </div>
+
+        <!-- txAdmin Config Card -->
+        <div class="card card-accent-danger" style="min-height: 160px;">
+            <div class="card-header font-weight-bold">txAdmin Config:</div>
+            <div class="card-body">
+                <h5>monitor:</h5>
+                <strong>zaman aşımı:</strong> <code>{{config.timeout}}</code> <br>
+                <strong>restarter.failures:</strong> <code>{{config.failures}}</code> <br>
+                <strong>restarter.zamanlayıcı:</strong> <code>{{config.schedule}}</code> <br>
+                <hr>
+                <h5>fxserver Konumları:</h5>
+                <strong>Kurulu Yer:</strong> <code>{{config.buildPath}}</code> <br>
+                <strong>Ana Dosya:</strong> <code>{{config.basePath}}</code><br>
+                <strong>Cfg Yeri:</strong> <code>{{config.cfgPath}}</code>
+                <hr>
+                <div class="text-center">
+                    <a href="/diagnostics/log" role="button" class="btn btn-outline-dark mx-auto">txAdmin Konsol Loglarına Bak</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- /.col-->
+
+
+    <div class="col-lg-8 col-xl-5">
+
+        <!-- FXServer Info Card -->
+        <div class="card card-accent-info" style="min-height: 160px;">
+            <div class="card-header font-weight-bold">FXServer Bilgi:</div>
+            <div class="card-body">
+                {{if(options.fxserver.error !== false)}}
+                    {{fxserver.error|safe}}
+                {{#else}}
+                    <strong>Durum: <span class="badge badge-{{fxserver.statusColor}}">{{fxserver.status}}</span>
+                    </strong><br>
+                    <strong>Sürüm:</strong> {{fxserver.version}} <br>
+                    <strong>Eklenti Sayısı:</strong> {{fxserver.resources}} <br>
+                    <strong>OneSync:</strong> {{fxserver.onesync}} <br>
+                    <strong>Oyuncu Slotu:</strong> {{fxserver.maxClients}} <br>
+                    <strong>Taglar:</strong> <code>{{fxserver.tags}}</code>
+                {{/if}}
+            </div>
+        </div>
+
+        <!-- Proccesses Card -->
+        <div class="card card-accent-info">
+            <div class="card-header font-weight-bold">İşlemler:</div>
+            <div class="card-body">
+                {{if(!options.proccesses.length)}}
+                    Bir hata oluştu. <br>
+                    Eğer hata modunu açtıysanız konsolu kontrol edin.
+                {{#else}}
+                    {{foreach(options.proccesses)}}
+                    <strong>İşlem:</strong> {{@this.name}} <br>
+                    <strong>Bellek:</strong> {{@this.memory}} <br>
+                    <strong>CPU:</strong> {{@this.cpu}} <br>
+                    <br>
+                    {{/foreach}}
+                {{/if}}
+            </div>
+        </div>
+
+    </div>
+    <!-- /.col-->
+</div>
+
+{{include("footer")/}}
